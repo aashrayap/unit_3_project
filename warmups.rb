@@ -6,38 +6,38 @@ class Parsing
   end
 
   def main
+  	#creting new array with all the lines in the html file
   	@array_of_lines=File.readlines('main.html')
 
+  	#parsing each line of our array into the data structure (struct)
   	@array_of_lines.each do |line,index|
   	  parse_tag(line)
   	end
+
   end
 
   def parse_tag(tag)
   	if tag.include?('class') || tag.include?('id')
 	  attributes1=Attributes.new
   	end
+
   	#placing class type into attribute.classes
   	if tag.include?('class')
 	  matching_class = tag.match (/class=['"](.+?)['"]/)
 	  attributes1.classes=matching_class.captures[0].split(' ')
-	  # print attributes1.classes
- 	end
+  	end
 
   	#placing id type into attribute.id
   	if tag.include?('id')
 	  matching_id = tag.match (/id=['"](.+?)['"]/)
 	  attributes1.classes=matching_id.captures
-	  # print attributes1.classes
   	end
 
   	if tag.include?('class') || tag.include?('id')
 	@attributes_array<<attributes1
-  	puts @attributes_array[-1].classes
   	end
-  
   end
-
+ 
 
 end
 
