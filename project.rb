@@ -8,7 +8,7 @@ class Reader
   end
 
   def build_tree
-  	@root=Node.new('document',nil,nil,nil,nil,nil)
+  	@root=Node.new('document',nil,nil,nil,[],nil)
   	@pointer=@root
   	@num_nodes=1
 
@@ -18,9 +18,10 @@ class Reader
   end
 
   def create_nodes(line)
+    @num_nodes+=1
   	test_node=parse_line(line)
   	if line.include?('<') && !line.include?('</')
-  	  @pointer.children<<Node.new(test_node.tag,test_node.text,test_node.class,test_node.id,nil,@pointer)
+  	  @pointer.children<<Node.new(test_node.tag,test_node.text,test_node.class,test_node.id,[],@pointer)
   	  @pointer=@pointer.children[-1]
   	end
 
@@ -37,17 +38,17 @@ class Reader
     test_node=Node.new(nil,nil,nil,nil,nil,nil)
     if line.include?('<')
       matching_tag = line.match (/[<](.+?)[ ]/)
-      test_node.tag=matching_tag.captures
+      test_node.tag=matching_tag
     end
 
     if line.include?('class')
       matching_class = line.match (/class=['"](.+?)['"]/)
-      test_node.classes=matching_class.captures[0].split(' ')
+      test_node.class=matching_class
     end
 
     if line.include?('id')
     matching_id = line.match (/id=['"](.+?)['"]/)
-    test_node.id=matching_id.captures
+    test_node.id=matching_id
     end
 
     if !line.include?('<')
@@ -56,9 +57,16 @@ class Reader
 
     return test_node
   end
+
+  def render
+    puts "You have #{@num_nodes} nodes"
+  end
+
+  def search
 end
 
 
 r=Reader.new
 r.build_tree
+r.render
 
