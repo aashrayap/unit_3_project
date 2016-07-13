@@ -30,6 +30,12 @@ class Searcher
           end
         end
 
+        unless checker.text.nil?
+	     if attribute=="text" && checker.text.include?(value)
+	        puts "Found #{value}"
+	     end
+     	end
+
 	  	checker.children.each do |child_of_child|
 	  		dfs_array<<child_of_child
 	  	end
