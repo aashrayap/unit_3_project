@@ -4,8 +4,9 @@ Node=Struct.new(:tag,:text,:class,:id,:children,:parent)
 class Reader 
   def initialize
   	@document=File.readlines('main.html')
-  	@pointer
+    build_tree
   end
+  attr_accessor :root
 
   def build_tree
   	@root=Node.new('document',nil,nil,nil,[],nil)
@@ -43,7 +44,7 @@ class Reader
 
     if line.include?('class')
       matching_class = line.match (/class=['"](.+?)['"]/)
-      test_node.class=matching_class
+      test_node.class=matching_class.to_s
     end
 
     if line.include?('id')
@@ -61,12 +62,6 @@ class Reader
   def render
     puts "You have #{@num_nodes} nodes"
   end
-
-  def search
 end
 
-
-r=Reader.new
-r.build_tree
-r.render
 
