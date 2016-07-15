@@ -47,3 +47,4 @@ tree=Reader.new
 searcher=Searcher.new(tree)
 searcher.dfs("id","main-area")
 searcher.dfs("tag","div")
+searcher.dfs("class","emphasized")
