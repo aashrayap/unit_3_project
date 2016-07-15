@@ -6,10 +6,12 @@ class Searcher
   	@cursor=tree.root
   end
 
+  #depth first search through tree for specific attribute and its value
   def dfs(attribute,value)
   	dfs_array=[]
   	dfs_array<<@cursor
 
+  	#until stack is empty, continue looping
 	while !dfs_array.empty?
 	 	checker=dfs_array.pop
 	  	unless checker.class.nil?
